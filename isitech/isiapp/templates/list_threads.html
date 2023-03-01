@@ -1,0 +1,38 @@
+<style>
+  th, td {
+    border: 1px solid black;
+    padding: 8px;
+  }
+</style>
+
+<table style="border: 2px solid rgb(200, 200, 200);">
+    <caption><h2> Threads </h2></caption>
+<thead>
+    <tr>
+        <th>Thread Id</th>
+        <th>Participants</th>
+        <th>Created</th>
+        <th>Updated</th>
+        <th>Delete thread</th>
+        <th>Check messages</th>
+    </tr>
+</thead>
+<tbody>
+{% for thread in data %}
+      <tr>
+        <td>{{ thread.id }}</td>
+        <td>{% for participant in thread.participants.all %}
+          <p><a href="{% url 'app:threads_for_user' user_name=participant.name %}">{{ participant.name }}</a></p>
+            {% endfor %}</td>
+        <td>{{ thread.created }}</td>
+        <td>{{ thread.updated }}</td>
+        <td><a href="{% url 'app:delete_thread' thread_id=thread.id%}">Delete thread</a></td>
+          <td><a href="{% url 'app:messages_for_thread' thread_id=thread.id%}">Check messages</a></td>
+      </tr>
+    {% endfor %}
+</tbody>
+</table>
+<br>
+<div><a href="{% url 'app:create_thread' %}">Create a new thread</a><div>
+<br>
+<div><a href="{% url 'app:create_message' %}">Create a new message</a><div>

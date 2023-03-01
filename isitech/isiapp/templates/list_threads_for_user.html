@@ -1,0 +1,39 @@
+<style>
+  th, td {
+    border: 1px solid black;
+    padding: 8px;
+  }
+</style>
+
+<table style="border: 2px solid rgb(200, 200, 200);">
+    <caption><h2> Threads for user {{ name }} </h2></caption>
+<thead>
+    <tr>
+        <th>Thread Id</th>
+        <th>Message Id</th>
+        <th>Sender</th>
+        <th>Last message text</th>
+        <th>Is read</th>
+        <th>Number of unread messages</th>
+        <th>Read the last message</th>
+    </tr>
+</thead>
+<tbody>
+{% for thread in data %}
+      <tr>
+            <td>{{ thread.0 }}</td>
+            <td>{{ thread.1 }}</td>
+            <td>{{ thread.2 }}</td>
+            <td>{{ thread.3 }}</td>
+            <td>{{ thread.4 }}</td>
+            <td>{{ thread.5 }}</td>
+            {% if thread|length > 1 %}
+            <td><a href="{% url 'app:check_message' message_id=thread.1 %}">Read</a></td>
+            {% endif %}
+      </tr>
+{% endfor %}
+</tbody>
+</table>
+
+<h2><a href="{% url 'app:all_threads' %}">< BACK</a></h2>
+

@@ -1,0 +1,14 @@
+
+<h2> List of users </h2>
+{% for user in data %}
+      <ul>
+        <li>{{ user.id }} {{ user.name }}</li>
+      </ul>
+{% endfor %}
+
+<form method="POST" action="{% url 'app:create_user_int' %}">
+    {% csrf_token %}
+    <label for="name">Name:</label>
+    <input type="text" name="name">
+    <button type="submit">Create</button>
+</form>

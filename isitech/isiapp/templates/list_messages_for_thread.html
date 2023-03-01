@@ -1,0 +1,35 @@
+<style>
+  th, td {
+    border: 1px solid black;
+    padding: 8px;
+  }
+</style>
+
+<table style="border: 2px solid rgb(200, 200, 200);">
+    <caption><h2> Messages in thread # {{ thread }} </h2></caption>
+<thead>
+    <tr>
+        <th>Message Id</th>
+        <th>Sender</th>
+        <th>Created</th>
+        <th>Text</th>
+        <th>Is read</th>
+        <th>Read message</th>
+    </tr>
+</thead>
+<tbody>
+{% for message in data %}
+      <tr>
+          <td><a href="{% url 'app:check_message' message_id=message.id %}">{{ message.id }}</a></td>
+          <td>{{ message.sender }}</td>
+          <td>{{ message.created }}</td>
+          <td>{{ message.text }}</td>
+          <td>{{ message.is_read }}</td>
+          <td><a href="{% url 'app:check_message' message_id=message.id %}">Read</a></td>
+      </tr>
+    {% endfor %}
+</tbody>
+</table>
+
+
+<h2><a href="{% url 'app:all_threads' %}">< BACK</a></h2>

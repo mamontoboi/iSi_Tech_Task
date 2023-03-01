@@ -1,0 +1,7 @@
+<div>
+    <h2>Message # {{ message.id }} from {{ message.sender }}</h2>
+    <p>Created: {{ message.created }}</p>
+    <p>Text: {{ message.text }}</p>
+</div>
+
+<h2><a href="{% url 'app:messages_for_thread' thread_id=message.thread.id %}">< BACK</a></h2>
