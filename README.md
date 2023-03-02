@@ -25,3 +25,5 @@ The DRF is presented by the API app, which can be accessed using the following U
     7. /api/message/\<id>/ -- to get, patch, or delete the details of a particular message
     
 - Note that the angle brackets in the URLs indicate a variable part of the URL and should be replaced with an actual ID or other value when making requests.
+
+- The app does not have an elaborate graphical user interface. Its overall design is simple and minimalist.
