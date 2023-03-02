@@ -10,7 +10,7 @@ from .models import Participants, Thread, Message
 def success_creation(request):
     """Notification in case of successful creation of a new element."""
     return HttpResponse(f"<script>alert ('The operation was successfully performed!'); "
-                        "window.location = '';</script>")
+                        "window.location = '/';</script>")
 
 
 class ParticipantsFormView(FormView):
@@ -84,7 +84,7 @@ def messages_for_thread(request, thread_id):
 def success_thread_deletion(request):
     """Notification in case of successful deletion of the author."""
     return HttpResponse("<script>alert ('The thread was successfully deleted!'); "
-                        "window.location = '';</script>")
+                        "window.location = '/';</script>")
 
 
 def delete_thread(request, thread_id):
@@ -94,7 +94,7 @@ def delete_thread(request, thread_id):
         return redirect(reverse_lazy('app:success_thread_delete'))
     else:
         return HttpResponse("<script>alert ('The thread with this number does not exist'); "
-                        "window.location = '';</script>")
+                        "window.location = '/';</script>")
 
 
 def check_message(request, message_id):
