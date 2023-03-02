@@ -1,13 +1,17 @@
 To start this app:
 1. Clone this project
-2. `python.exe -m pip install --upgrade pip`
-3. `pip install -r requirements.txt `
-4. `cd .\isitech\`
-5. `python manage.py migrate`
-6. `python manage.py makemigrations isiapp`
-7. `python manage.py migrate isiapp`
-8. `python manage.py createsuperuser`
-9. `python manage.py runserver`
+2. `virtualenv venv`
+3. `cd venv`
+4. `scripts\activate`
+5. `cd ..`
+6. `python.exe -m pip install --upgrade pip`
+7. `pip install -r requirements.txt`
+8. `cd .\isitech\`
+9. `python manage.py migrate`
+10. `python manage.py makemigrations isiapp`
+11. `python manage.py migrate isiapp`
+12. `python manage.py createsuperuser`
+13. `python manage.py runserver`
 
 Routing:
 - The main page of the app presents a list of all available threads. 
