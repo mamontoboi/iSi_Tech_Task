@@ -16,9 +16,9 @@ All other details can be obtained from isiapp\urls.py.
   
 - DRF is presented by api app. It can be accessed by the following urls:
     1. /api/user/ -- to get the list all users (participants in the threads) and create a new user
-    2. /api/user/<id>/ -- to get, patch or delete the particular user details
+    2. /api/user/\<id>/ -- to get, patch or delete the particular user details
     3. /api/thread/ -- to get the list of all threads and create a new thread
-    4. /api/thread/<id>/ -- to get, patch or delete the particular thread details
+    4. /api/thread/\<id>/ -- to get, patch or delete the particular thread details
     5. /api/message/ -- to get the list all messages
     6. /api/message/create -- to create a new message
-    7. /api/message/<id>/ -- to get, patch or delete the particular message details
+    7. /api/message/\<id>/ -- to get, patch or delete the particular message details
