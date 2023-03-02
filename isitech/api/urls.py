@@ -13,11 +13,18 @@ Including another URLconf
     1. Import the include() function: from django.urls import include, path
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
-from django.contrib import admin
 from django.urls import path, include
+from . import views
+from rest_framework.routers import DefaultRouter
+
+
+router = DefaultRouter()
+router.register(r'user', views.ParticipantsViewSet)
+router.register(r'thread', views.ThreadViewSet)
 
 urlpatterns = [
-    path('admin/', admin.site.urls),
-    path('', include(('isiapp.urls', 'isiapp'), namespace='app')),
-    path('api/', include('api.urls')),
+    path('', include(router.urls)),
+    path('message/create/', views.MessageCreate.as_view()),
+    path('message/', views.MessageList.as_view()),
+    path('message/<int:pk>/', views.MessageRetrieveUpdateDestroy.as_view()),
 ]
