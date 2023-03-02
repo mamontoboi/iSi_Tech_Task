@@ -5,10 +5,12 @@
         <li>{{ user.id }} {{ user.name }}</li>
       </ul>
 {% endfor %}
-
+<br>
 <form method="POST" action="{% url 'app:create_user_int' %}">
     {% csrf_token %}
     <label for="name">Name:</label>
     <input type="text" name="name">
     <button type="submit">Create</button>
 </form>
+<br>
+<h4><a href="{% url 'app:all_threads' %}"> Back to list of threads</a><h4>

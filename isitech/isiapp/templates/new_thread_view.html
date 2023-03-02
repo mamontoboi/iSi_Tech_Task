@@ -1,10 +1,12 @@
 <form method="POST" enctype="multipart/form-data">
     {% csrf_token %}
-        {% for field in form %}
+    {% for field in form %}
         <div>
         <label>{{ field.label_tag }}</label><br>
         {{ field }}
         </div>
-        {% endfor %}
-        <input type="submit" value="Create thread" style="text-decoration: #080710; font-weight: bold;">
-    </form>
+    {% endfor %}
+    <input type="submit" value="Create thread" style="text-decoration: #080710; font-weight: bold;">
+</form>
+<br>
+<h4><a href="{% url 'app:all_threads' %}"> Back to list of threads</a><h4>
