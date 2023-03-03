@@ -1,8 +1,9 @@
+from django.core.exceptions import ObjectDoesNotExist
 from django.db import models
 
 
 class Participants(models.Model):
-    name = models.CharField(max_length=64, unique=True)
+    name = models.CharField(max_length=64, unique=True, db_index=True, default='John Doe')
 
     class Meta:
         verbose_name_plural = "Participants"
@@ -37,8 +38,12 @@ class Participants(models.Model):
 
 class Thread(models.Model):
     participants = models.ManyToManyField(Participants, related_name='threads')
-    created = models.DateTimeField(auto_now_add=True)
+    created = models.DateTimeField(auto_now_add=True, db_index=True)
     updated = models.DateTimeField(auto_now=True)
+
+    class Meta:
+        ordering = ['-created']
+        verbose_name_plural = 'Threads'
 
     def __str__(self):
         return str(self.pk)
@@ -52,8 +57,11 @@ class Thread(models.Model):
 
     @staticmethod
     def get_or_create_thread(name_1, name_2):
-        user_1 = Participants.objects.get(name=name_1)
-        user_2 = Participants.objects.get(name=name_2)
+        try:
+            user_1 = Participants.objects.get(name=name_1)
+            user_2 = Participants.objects.get(name=name_2)
+        except ObjectDoesNotExist:
+            return ["Participant of participants does not exist!"]
         thread = Thread.objects.filter(participants=user_1).filter(participants=user_2).first()
         if thread:
             return [thread]
@@ -64,20 +72,16 @@ class Thread(models.Model):
 
     @staticmethod
     def delete_thread(thread_id):
-        try:
-            thread = Thread.objects.get(id=thread_id)
-            thread.delete()
-            return True
-        except:
-            return False
+        thread = Thread.objects.get(id=thread_id)
+        thread.delete()
+        return True
 
     def get_messages(self):
         messages = self.messages.all()
-        for message in messages:
-            if any(message.is_read):
-                return f"Some of messages have been read: {messages}"
-            else:
-                return f"None of messages have been read: {messages}"
+        if messages.filter(is_read=True).exists():
+            return f"Some of messages have been read: {messages}"
+        else:
+            return f"None of messages have been read: {messages}"
 
     def create_message(self, sender, text):
         participant = Participants.objects.get(name=sender)
@@ -86,11 +90,14 @@ class Thread(models.Model):
 
 
 class Message(models.Model):
-    sender = models.ForeignKey(Participants, related_name='sent_messages', on_delete=models.SET_NULL, null=True)
-    text = models.TextField(null=True, blank=True, max_length=512)
+    sender = models.ForeignKey(Participants, related_name='sent_messages', on_delete=models.CASCADE, db_index=True)
+    text = models.TextField(max_length=512, default='empty message')
     thread = models.ForeignKey(Thread, related_name='messages', on_delete=models.CASCADE)
     created = models.DateTimeField(auto_now_add=True)
-    is_read = models.BooleanField(default=False)
+    is_read = models.BooleanField(default=False, db_index=True)
+
+    class Meta:
+        ordering = ['-is_read']
 
     def __str__(self):
         return f"Message {self.pk} from {self.sender}"

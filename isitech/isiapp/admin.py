@@ -22,6 +22,8 @@ class MessageInline(admin.StackedInline):
     model = Message
     extra = 1
 
+    raw_id_fields = ['sender']
+
 
 class ThreadAdmin(admin.ModelAdmin):
     inlines = [MessageInline]
@@ -34,6 +36,7 @@ class ThreadAdmin(admin.ModelAdmin):
 
     list_display = ('id', 'display_participants', 'created', 'updated')
     list_filter = ('created', 'updated')
+    raw_id_fields = ('participants',)
 
 
 class MessageAdmin(admin.ModelAdmin):
